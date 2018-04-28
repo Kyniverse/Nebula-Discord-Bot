@@ -1,32 +1,67 @@
 //  Importing our module base for a slick OOP system.
 import ModuleBase from "../ModuleBase";
 
-//  Importing the config object since we need the prefix.
+//  Importing Config for the Prefix.
 import Config from '../Config';
 
+/*                AdminModule 
+ * 
+ *  This module contains a few useful commands which
+ *  Admins can use regarding management.
+ */
 export default class AdminModule extends ModuleBase {
   constructor(client, moduleName) {
-    super(client);
-
-    this.moduleName = moduleName;
+    super(client, moduleName);
     this.config = { 
       "active": true,
+      "usePrefix": true,
       "ignore": true,
       "channels": []
     }
   }
 
+  /*         
+   *    Update is called every time the modules is updated.
+   */
   update(message, command, args) {
-    if (!message.member.roles.find('id', '425722321328930827')) return;
-    if (!this.command.startsWith(Config.Bot.prefix)) return;
+    super.update(message, command, args);
+    let user = message.member;
 
-    switch(command) {
-      case '':
-        break;
+    if (!user.roles.has(Config.Bot.roles.admin)) return;
+  }
 
-      default:
-        message.channel.send('Sorry! Command not found');
-        break;
-    }
+  /*         
+   *    showHelpMenu(); is called whenever the user types:
+   *    'prefix + help + module-name'. All users.
+   */
+  showHelpMenu(channel) {
+    channel.send({embed: {
+      color: 0x78c811,
+      author: {
+        //  name of the author, we use the bot.
+        name: this.client.user.username,
+
+        //  avatar of the author, we use the bot.
+        icon_url: this.client.user.avatarURL
+      },
+      title: `Command help menu for ${this.moduleName}`,
+      description:  'Description of this config menu',
+      fields: [{
+          name: 'Name of this field',
+          value: 'The value of this field'
+        }
+      ],
+      //  Displaying when this message was created.
+      timestamp: new Date(),
+      footer: {
+        //  avatar of the author, we use the bot.
+        icon_url: this.client.user.avatarURL,
+
+        //  Displaying copyright message because we can.
+        text: "© Nebula - Zurkloyd, Module - Zurkloyd"
+      } 
+    }});
   }
 }
+
+
