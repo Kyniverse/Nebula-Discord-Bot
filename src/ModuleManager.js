@@ -103,7 +103,8 @@ export default class ModuleManager {
     let modules = 'No modules installed!';
 
     if (this.modules.length > 1) {
-      for (let index = 1; index < modules.length; index++) {
+      modules = '';
+      for (let index = 1; index < this.modules.length; index++) {
         modules += this.modules[index].moduleName + '\n';
       }
     }
