@@ -61,43 +61,5 @@ export default class App {
         }});
       }, 1000);
     });
-
-
-/*
-    this.initDatabase(database, () => {
-      
-      moduleManager.loadConfigurations();
-      Config.GetBotConfig(() => client.login(Config.Bot.token));
-    });
-
-    client.on('ready', () => console.log('Nebula-development ready.'));
-
-    client.on("message", async message => {
-      
-      if (message.author.bot) return;
-
-      const args = message.content.slice('>').trim().split(/ +/g);
-      const command = args.shift().toLowerCase();
-
-      moduleManager.update(message, command, args);
-      settingsManager.update(message, command, args);
-    });
-
-    client.on("guildMemberAdd", (member) => {});
-  }
-
-
-  //  Connects the bot to the database and gives is a callback on success.
-  initDatabase(database, onSuccess) {
-    database.connect(Config.mySQL)
-    .then((reponse) => {
-      console.log("Successfully connected to database: { host: " + Config.mySQL.host + ", database: " + Config.mySQL.database + " }");
-      onSuccess();
-    })
-    .catch((error) => { console.log(error); });
-  }
-*/
-
-
   }
 }
