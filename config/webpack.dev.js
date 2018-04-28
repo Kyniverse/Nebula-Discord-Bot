@@ -4,7 +4,7 @@ var fs = require('fs');
 var NodemonPlugin = require('nodemon-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: ['babel-polyfill', './src/index.js'],
     target: 'node',
     output: {
         path: path.join(__dirname, '../build'),
