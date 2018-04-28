@@ -159,6 +159,7 @@ export default class ConfigModule extends ModuleBase {
     //
     if (done) {
       Config.Bot.configurated = true;
+      if (channel === undefined) return;
       channel.send('Everything is set! If you have unsaved changes, please use >setup save.');
     }
   }
@@ -208,15 +209,15 @@ export default class ConfigModule extends ModuleBase {
         case 'join':
         //  Doing some checks before writing the data.
           if (this.checkIsChannel(channel, args[1])) {
-            Config.Bot.roles.verified = args[1];
-            channel.send(`Verified role set to: *${args[1]}*`);
+            Config.Bot.channels.join = args[1];
+            channel.send(`Join Channel set to: *${args[1]}*`);
           } else channel.send(`The given ID is not a role ID!: **${args[1]}**`);
           break;
         case 'initiation':
         //  Doing some checks before writing the data.
           if (this.checkIsChannel(channel, args[1])) {
-            Config.Bot.roles.verified = args[1];
-            channel.send(`Verified role set to: *${args[1]}*`);
+            Config.Bot.channels.initiation = args[1];
+            channel.send(`Initiation Channel set to: *${args[1]}*`);
           } else channel.send(`The given ID is not a role ID!: **${args[1]}**`);
           break;
         default: 
@@ -237,6 +238,8 @@ export default class ConfigModule extends ModuleBase {
     } else {
       channel.send(`Incorrect command usage or argument: **${args[0]}**`);
     }
+
+    this.checkForBotConfig(channel);
   }
 
   /* 
@@ -306,7 +309,7 @@ export default class ConfigModule extends ModuleBase {
         icon_url: this.client.user.avatarURL
       },
       title: 'Nebula Configuration View',
-      description:  'Please use the following commands to configure Nebula.' +
+      description:  'Please use the following commands to configure Nebula.\n' +
                     `NOTE: All commands start with ${Config.Bot.prefix}config!`,
       fields: [{
           name: 'Installed modules',
