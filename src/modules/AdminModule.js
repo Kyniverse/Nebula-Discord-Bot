@@ -4,6 +4,9 @@ import ModuleBase from "../ModuleBase";
 //  Importing Config for the Prefix.
 import Config from '../Config';
 
+//  Importing the Utility-Service for easy parsing.
+import Utility from '../Utilities/IdParser';
+
 /*                AdminModule 
  * 
  *  This module contains a few useful commands which
@@ -26,8 +29,29 @@ export default class AdminModule extends ModuleBase {
   update(message, command, args) {
     super.update(message, command, args);
     let user = message.member;
+    let channel = message.channel;
 
     if (!user.roles.has(Config.Bot.roles.admin)) return;
+
+    if (command === 'info' && args[0] !== undefined) {
+      let info = undefined;
+      let trimmedId = Utility.getTrimmedID(args[0]);
+
+      if (Utility.doesUserExist(channel.guild, trimmedId)) {
+        info = Utility.getUserInfo(channel.guild, trimmedId);
+        channel.send(
+          `**Name**: ${info.name}\n` + 
+          `**ID**: ${info.id}\n` + 
+          `**Join Date**: ${info.joinDate}`
+        );
+      } else if (Utility.doesRoleExist(channel.guild, trimmedId)) {
+        info = Utility.getRoleInfo(channel.guild, trimmedId);
+        channel.send(
+          `**Name**: ${info.name}\n` + 
+          `**ID**: ${info.id}`
+        );
+      } else channel.send('The given user or role could not be found!');      
+    }
   }
 
   /*         
@@ -45,10 +69,10 @@ export default class AdminModule extends ModuleBase {
         icon_url: this.client.user.avatarURL
       },
       title: `Command help menu for ${this.moduleName}`,
-      description:  'Description of this config menu',
+      description:  'Utility commands for admins.',
       fields: [{
-          name: 'Name of this field',
-          value: 'The value of this field'
+          name: `${Config.Bot.prefix}info <@user | @role>`,
+          value: 'Displays information about the given user or role.'
         }
       ],
       //  Displaying when this message was created.

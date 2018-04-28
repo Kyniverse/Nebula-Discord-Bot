@@ -1,19 +1,37 @@
 module.exports = {
-  GetUserInfo(guild, userId) {
-    let userId = undefined;
-    if (userId.length !== 18) userId.substring(2, userId.length - 1);
-    let user = guild.members.find('id', userId);
+  getTrimmedID(id) {
+    if (id.length > 18) id = id.substring(2, id.length - 1);
+    id = id.replace('&', '');
+    return id;
+  },
+
+  /*
+   *  Basic wrapper function to check if a User exists.
+   */
+  doesUserExist(guild, userId) { return guild.members.has(userId) },
+
+  /*
+   *  Basic wrapper function to check if a Role exists.
+   */
+  doesRoleExist(guild, roleId) { return guild.roles.has(roleId); },
+
+  /*
+   *  Retrieves the user by the given user ID
+   */
+  getUserInfo(guild, userId) {
+    var user = guild.members.find('id', userId);
     return {
       name: user.displayName,
       id: user.id,
-      joinDate: user.joinDate
+      joinDate: user.joinedAt
     }
   },
 
-  GetRoleInfo(guild, roleId) {
-    let roleId = undefined;
-    if (roleId.length !== 18) roleId.substring(2, roleId.length - 1);
-    let role = guild.members.find('id', roleId);
+  /*
+   *  Retrieves the role by the given role ID
+   */
+  getRoleInfo(guild, roleId) {
+    var role = guild.roles.find('id', roleId);
     return {
       name: role.name,
       id: role.id,
