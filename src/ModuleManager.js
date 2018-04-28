@@ -88,7 +88,7 @@ export default class ModuleManager {
    */
   doesModuleExist(moduleName) {
     if (this.modules.length > 1) {
-      for (let index = 1; index < modules.length; index++) {
+      for (let index = 1; index < this.modules.length; index++) {
         if (args[0] === this.modules[index].moduleName) return true;
       }
     }
