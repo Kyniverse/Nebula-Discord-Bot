@@ -43,9 +43,21 @@ export default class App {
       moduleManager.update(message);
     });
 
+    /*
+     *  guildMemberAdd(); is called whenever a new person joins
+     *  the discord server.
+     */
     client.on('guildMemberAdd', member => {
+      //
+      //  Before displaying a welcome message and tagging
+      //  the user, we are first checking if the welcome
+      //  channel is actually assigned.
+      //
+      if (Config.Bot.channels.join !== '') return;
+      let joinChannel = member.guild.channels.find('id', Config.Bot.channels.join);
+
       setTimeout(() => {
-        message.channel.send({embed: {
+        joinChannel.send({embed: {
           color: 0x78c811,
           author: {
             name: client.user.username,
@@ -61,7 +73,7 @@ export default class App {
             text: "© Zurkloyd"
           }  
         }});
-      }, 1000);
+      }, 500);
     });
   }
 }
