@@ -47,7 +47,6 @@ export default class ModuleBase {
     {
       if (!message.member.roles.has(Config.Bot.roles.admin)) return;
       if (command === 'config') {
-        console.log('test');
         if (args.length === 1 && args[0] === this.moduleName) {
           this.showConfigHelpMenu(message.channel)
         } else if (args.length >= 1  && args[0] === this.moduleName) {

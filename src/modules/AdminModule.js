@@ -5,7 +5,7 @@ import ModuleBase from "../ModuleBase";
 import Config from '../Config';
 
 //  Importing the Utility-Service for easy parsing.
-import Utility from '../Utilities/IdParser';
+import Util from '../Utilities/IdParser';
 
 /*                AdminModule 
  * 
@@ -31,21 +31,29 @@ export default class AdminModule extends ModuleBase {
     let user = message.member;
     let channel = message.channel;
 
-    if (!user.roles.has(Config.Bot.roles.admin)) return;
+    if (!user.roles.has(Config.Bot.roles.admin)) {
+      channel.send('You do not have the correct permissions to use this!');
+      return;
+    }
 
     if (command === 'info' && args[0] !== undefined) {
+      //
+      //  The info command retrieves informtion about either a user or 
+      //  a role and prints it out in the chat, this could be usefull 
+      //  for an numerous of reasons.
+      //
       let info = undefined;
-      let trimmedId = Utility.getTrimmedID(args[0]);
+      let trimmedId = Util.getTrimmedID(args[0]);
 
-      if (Utility.doesUserExist(channel.guild, trimmedId)) {
-        info = Utility.getUserInfo(channel.guild, trimmedId);
+      if (Util.doesUserExist(channel.guild, trimmedId)) {
+        info = Util.getUserInfo(channel.guild, trimmedId);
         channel.send(
           `**Name**: ${info.name}\n` + 
           `**ID**: ${info.id}\n` + 
           `**Join Date**: ${info.joinDate}`
         );
-      } else if (Utility.doesRoleExist(channel.guild, trimmedId)) {
-        info = Utility.getRoleInfo(channel.guild, trimmedId);
+      } else if (Util.doesRoleExist(channel.guild, trimmedId)) {
+        info = Util.getRoleInfo(channel.guild, trimmedId);
         channel.send(
           `**Name**: ${info.name}\n` + 
           `**ID**: ${info.id}`
@@ -62,9 +70,10 @@ export default class AdminModule extends ModuleBase {
       if (args[0].match(/[a-z]/)) { channel.send('The given argument can not contain letters and only numbers!'); }
       let amount = parseInt(args[0]);
 
+      //  Simple version of deleting everything.
       channel.bulkDelete(amount, true)
         .then(messages => {
-          console.log(`Deleted ${amount} messages.`);
+          console.log(`Attempted to delete ${amount} message(s) requested by: ${user.displayName}`);
         })
         .catch(console.error);
     }
