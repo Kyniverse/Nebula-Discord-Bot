@@ -7,6 +7,7 @@ import Config from './Config';
 import ModuleManager from './ModuleManager';
 import ConfigModule from './modules/ConfigModule.js';
 import AdminModule from './modules/AdminModule.js';
+import InitiationModule from './modules/InitiationModule.js';
 
 //  Main app.
 export default class App {
@@ -21,6 +22,7 @@ export default class App {
     //  Adding the different modules to the Bot
     moduleManager.addModule(new ConfigModule(client, 'config', moduleManager));
     moduleManager.addModule(new AdminModule(client, 'admin'));
+    moduleManager.addModule(new InitiationModule(client, 'initiation'));
 
     //  Connecting to the database and on success, connecting the bot to the Discord-API.
     database.connect(Config.mySQL)

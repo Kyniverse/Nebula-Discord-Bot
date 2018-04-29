@@ -44,6 +44,7 @@ export default class AdminModule extends ModuleBase {
       //
       let info = undefined;
       let trimmedId = Util.getTrimmedID(args[0]);
+      if (user.match(/[a-z]/)) { channel.send('The given argument can not contain letters and only numbers!'); }
 
       if (Util.doesUserExist(channel.guild, trimmedId)) {
         info = Util.getUserInfo(channel.guild, trimmedId);
