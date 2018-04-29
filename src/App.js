@@ -54,6 +54,7 @@ export default class App {
       //  channel is actually assigned.
       //
       if (Config.Bot.channels.join !== '') return;
+      if (!member.guild.available) return;
       let joinChannel = member.guild.channels.find('id', Config.Bot.channels.join);
 
       setTimeout(() => {
