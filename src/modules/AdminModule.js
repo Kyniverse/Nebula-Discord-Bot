@@ -52,6 +52,22 @@ export default class AdminModule extends ModuleBase {
         );
       } else channel.send('The given user or role could not be found!');      
     }
+
+    if (command === 'purge' && args[0] !== undefined) {
+      //
+      //  The purge command removes messages from any given channel.
+      //  Usually, discord does not allow us to remove messages which
+      //  are more than 2 weeks old but we can work around that.
+      //
+      if (args[0].match(/[a-z]/)) { channel.send('The given argument can not contain letters and only numbers!'); }
+      let amount = parseInt(args[0]);
+
+      channel.bulkDelete(amount, true)
+        .then(messages => {
+          console.log(`Deleted ${amount} messages.`);
+        })
+        .catch(console.error);
+    }
   }
 
   /*         
@@ -86,6 +102,12 @@ export default class AdminModule extends ModuleBase {
       } 
     }});
   }
+
+  /*         
+   *    showConfigHelpMenu(); is called whenever the user types:
+   *    'prefix + config + module-name'. Admins only.
+   */
+  showConfigHelpMenu(channel) { channel.send(`The requested module: **${this.moduleName}** does not have any configuration settings!`); }
 }
 
 

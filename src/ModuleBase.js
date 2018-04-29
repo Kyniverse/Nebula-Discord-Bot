@@ -41,12 +41,13 @@ export default class ModuleBase {
         args[0] === this.moduleName) {
       this.showHelpMenu(message.channel);
     }
+    
     //  Check if the default config message requirements are met.
     if (this.defaultConfigMessage)
     {
-      if (!message.member.roles.has('id', Config.Bot.roles.admin)) return;
-
+      if (!message.member.roles.has(Config.Bot.roles.admin)) return;
       if (command === 'config') {
+        console.log('test');
         if (args.length === 1 && args[0] === this.moduleName) {
           this.showConfigHelpMenu(message.channel)
         } else if (args.length >= 1  && args[0] === this.moduleName) {

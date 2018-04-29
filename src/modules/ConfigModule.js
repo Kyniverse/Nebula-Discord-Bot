@@ -91,7 +91,7 @@ export default class ConfigModule extends ModuleBase {
             if (args[0] === 'save') {
               this.ModuleManager.saveModuleConfigurations();
             } else {
-              if (this.ModuleManager.doesModuleExist(args[0])) {
+              if (!this.ModuleManager.doesModuleExist(args[0])) {
                 message.channel.send("I'm sorry but the given module could not be found. Module: " + args[0]);
               }
             }
