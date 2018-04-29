@@ -1,7 +1,7 @@
 {
-  "name": "Nightwatch",
+  "name": "Nebula",
   "version": "1.0.0",
-  "description": "Discord bot",
+  "description": "Discord Bot for the 'Coping With Emotions' guild.",
   "main": "build/server.js",
   "scripts": {
     "watch": "webpack -d --watch --config=config/webpack.dev.js",
