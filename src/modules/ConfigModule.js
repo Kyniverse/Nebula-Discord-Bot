@@ -102,6 +102,10 @@ export default class ConfigModule extends ModuleBase {
           channel.send('you do not have permission to use this.');
         }
       }
+
+      if (command === 'help' && args.length === 0) {
+        this.displayGlobalConfigMessage(channel);
+      }
     }
   }
 
@@ -308,9 +312,10 @@ export default class ConfigModule extends ModuleBase {
         name: this.client.user.username,
         icon_url: this.client.user.avatarURL
       },
-      title: 'Nebula Configuration View',
-      description:  'Please use the following commands to configure Nebula.\n' +
-                    `NOTE: All commands start with ${Config.Bot.prefix}config!`,
+      title: 'Nebula Help View',
+      description:  'Below are listed the currently installed modules for Nebula' +
+                    `You can use either: ${Config.Bot.prefix}config or ${Config.Bot.prefix}help ` + 
+                    'for more information regarding the modules.',
       fields: [{
           name: 'Installed modules',
           value: modules
